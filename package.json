@@ -10,8 +10,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/slider": "^4.5.5",
+    "@react-navigation/native": "^7.0.3",
+    "@react-navigation/native-stack": "^7.0.3",
     "react": "18.3.1",
-    "react-native": "0.76.2"
+    "react-native": "0.76.2",
+    "react-native-safe-area-context": "^4.14.0",
+    "react-native-screens": "^4.1.0",
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -35,5 +41,9 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/hazemmuuhammed/SmartHeatingControl.git",
+  "author": "hazemmuuhammed <202027220@std.sci.cu.edu.eg>",
+  "license": "MIT"
 }
