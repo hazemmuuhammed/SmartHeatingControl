@@ -47,6 +47,9 @@ This is one way to run your app — you can also run it directly from within And
 
 # Integration of TemperatureSlider with Voice Control Systems
 
+![Speech Recognition Diagram](speech-recogntion.png)
+
+
 To integrate the **TemperatureSlider** feature with voice control systems like **Amazon Alexa** or **Google Home**, follow these steps:
 
 1. **Expose Temperature Control Functionality**: Develop an API or smart home capability that interfaces with your temperature control features.
