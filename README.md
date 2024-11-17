@@ -50,17 +50,221 @@ This is one way to run your app — you can also run it directly from within And
 ![Speech Recognition Diagram](speech-recogntion.png)
 
 
-To integrate the **TemperatureSlider** feature with voice control systems like **Amazon Alexa** or **Google Home**, follow these steps:
+# Alexa and Google Home Integration for Mobile Applications
 
-1. **Expose Temperature Control Functionality**: Develop an API or smart home capability that interfaces with your temperature control features.
+This guide provides step-by-step instructions to integrate **Alexa** and **Google Home** with your mobile application to perform specific tasks, such as controlling a `TemperatureSlider`.
 
-2. **Create a Skill or Action**:
-   - For **Alexa**: Develop a custom **Alexa Skill** that connects with your API.
-   - For **Google Home**: Create a **Google Action** that links to your API.
+---
 
-3. **Implement Voice Commands**: Enable users to set or query the temperature using voice commands by defining intents and utterances in your skill or action.
+## Prerequisites
 
-4. **Ensure State Synchronization**: Implement bi-directional communication between the app and the voice assistant platform to keep the slider's state synchronized with the smart home system.
+### General
+- A mobile app development environment for **iOS** (Xcode) and **Android** (Android Studio).
+- Basic knowledge of APIs and native modules to integrate it with react native.
+
+### Amazon Alexa
+- An **Amazon Developer Account**: [](https://developer.amazon.com/).
+
+### Google Home
+- A **Google Cloud Account**: [](https://console.cloud.google.com/).
+
+---
+
+## Alexa Integration
+
+### Step 1: Create a Custom Alexa Skill
+1. Log in to the [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask).
+2. Click **"Create Skill"** and name it (e.g., *TemperatureController*).
+3. Select:
+   - **Custom Model**.
+   - **Provision your own backend**.
+4. Continue to the skill creation page.
+
+---
+
+### Step 2: Define Intents
+1. In the **Interaction Model** tab, add the following intents:
+    ```json
+    {
+      "intents": [
+        {
+          "name": "SetTemperatureIntent",
+          "slots": [
+            {
+              "name": "temperature",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "Set temperature to {temperature}",
+            "Adjust the temperature to {temperature}"
+          ]
+        },
+        {
+          "name": "GetTemperatureIntent",
+          "slots": [],
+          "samples": [
+            "What is the current temperature?",
+            "Get the temperature"
+          ]
+        }
+      ]
+    }
+    ```
+2. Save the interaction model and build the skill.
+
+---
+
+### Step 3: Connect to Your API
+- Configure the skill’s **Endpoint**:
+  - Use your API's HTTPS endpoint for handling Alexa's requests.
+  - The API should implement logic to:
+    - Handle `SetTemperatureIntent` to set the temperature.
+    - Handle `GetTemperatureIntent` to fetch the current temperature.
+
+---
+
+### Example API Requirements
+- **Set Temperature Endpoint**: Accepts a temperature value and updates the app state.
+    - **Method**: `POST`
+    - **Endpoint**: `/set-temperature`
+    - **Payload**:
+        ```json
+        { "temperature": 24 }
+        ```
+- **Get Temperature Endpoint**: Returns the current temperature.
+    - **Method**: `GET`
+    - **Endpoint**: `/get-temperature`
+
+This API should be from the java spring backend service.
+
+---
+
+## Google Home Integration
+
+### Step 1: Create a Google Action
+1. Visit the [Google Actions Console](https://console.actions.google.com/).
+2. Create a new project and name it (e.g., *TemperatureController*).
+3. Choose **Smart Home** or **Custom Action** depending on your needs.
+
+---
+
+### Step 2: Define Actions
+Use **Dialogflow** to handle intents and parameters.
+- Example actions:
+  - **Set Temperature**: Matches phrases like *"Set the temperature to 24"*.
+  - **Get Temperature**: Matches *"What’s the temperature?"*.
+
+---
+
+### Step 3: Connect to Your API
+Link your webhook API to Dialogflow:
+- The API should handle intents to set and retrieve the temperature.
+- Example payload structure:
+
+#### Set Temperature Intent
+- **Intent**: `Set Temperature`
+- **Payload**:
+    ```json
+    { "temperature": 24 }
+    ```
+
+#### Get Temperature Intent
+- **Intent**: `Get Temperature`
+- **Response**:
+    ```json
+    { "temperature": 24 }
+    ```
+
+---
+
+### Step 4: Deploy and Test
+- Deploy your API to a secure platform.
+- Link the webhook to your Google Action in the **Actions Console**.
+- Test the integration using the **Simulator** in the Actions Console.
+
+---
+
+## Native Module Integration with iOS and Android
+
+### iOS Integration
+1. **Use the Alexa Voice Service (AVS)** or **Google Assistant SDK** directly in your iOS app:
+   - Use `NSURLSession` to make API calls for Alexa or Google Assistant requests.
+   - Implement audio capture using `AVAudioRecorder` for voice commands.
+
+2. **Create a Native Module**:
+   - In Xcode, write Objective-C or Swift code that communicates with AVS or Google Assistant APIs.
+   - Expose these methods to your app.
+
+3. **Set Up OAuth2 Authorization**:
+   - Use `ASWebAuthenticationSession` or a similar framework for signing in with Amazon or Google accounts.
+
+4. **Send Voice Data to APIs**:
+   - Record audio and send it to the respective APIs (AVS or Google Assistant).
+   - Parse responses and execute the corresponding actions.
+
+---
+
+### Android Integration
+1. **Use the Alexa Voice Service (AVS)** or **Google Assistant SDK**:
+   - Implement voice recording with `AudioRecord` or `MediaRecorder`.
+   - Make HTTP requests to AVS or Google Assistant APIs using libraries like `Retrofit`.
+
+2. **Create a Native Module**:
+   - Write Java or Kotlin code to handle voice interactions and API communication.
+   - Use the `@ReactMethod` annotation (if integrating with React Native) to expose these methods.
+
+3. **Set Up OAuth2 Authorization**:
+   - Use `CustomTabsIntent` or `WebView` for Amazon or Google account authentication.
+
+4. **Handle API Responses**:
+   - Parse JSON responses and trigger the corresponding actions in the app.
+
+---
+
+## Connect Native Modules to React Native
+
+To integrate your native modules with React Native:
+
+### iOS
+1. **Expose the Module**:
+   - Use `RCT_EXPORT_MODULE` in your Objective-C/Swift file to expose the module to React Native.
+
+   ```objc
+   #import "React/RCTBridgeModule.h"
+
+   @interface AlexaModule : NSObject <RCTBridgeModule>
+   @end
+
+   @implementation AlexaModule
+
+   RCT_EXPORT_MODULE();
+
+   RCT_EXPORT_METHOD(sendCommand:(NSString *)command resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+     // Process Alexa commands using AVS
+     resolve(@{ @"result": @"Command Sent" });
+   }
+
+   @end
+
+
+## Important Notes
+- Always use secure HTTPS endpoints for API communication.
+- Implement proper error handling for OAuth and API requests.
+- Test thoroughly using simulators and actual devices before publishing.
+
+---
+
+## Next Steps
+1. Publish your Alexa skill in the Alexa Skills Store.
+2. Publish your Google Action on the Google Assistant platform.
+
+---
+
+For more info, refer to:
+- [Amazon Alexa Developer Documentation](https://developer.amazon.com/en-US/alexa)
+- [Google Actions on Google Documentation](https://developers.google.com/assistant)
+
 
 ---
 
