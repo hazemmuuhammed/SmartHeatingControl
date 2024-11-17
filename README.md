@@ -60,7 +60,7 @@ This guide provides step-by-step instructions to integrate **Alexa** and **Googl
 
 ### General
 - A mobile app development environment for **iOS** (Xcode) and **Android** (Android Studio).
-- Basic knowledge of APIs and native modules to integrate it with react native.
+- native modules to integrate it with react native.
 
 ### Amazon Alexa
 - An **Amazon Developer Account**: [](https://developer.amazon.com/).
