@@ -251,7 +251,7 @@ To integrate your native modules with React Native:
 ## Important Notes
 - Always use secure HTTPS endpoints for API communication.
 - Implement proper error handling for OAuth and API requests.
-- Test thoroughly using simulators and actual devices before publishing.
+- Test thoroughly using simulators and actual devices before publishing because it maybe working on Dev and not working on Prod.
 
 ---
 
