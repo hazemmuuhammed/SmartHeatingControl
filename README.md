@@ -61,6 +61,65 @@ To integrate the **TemperatureSlider** feature with voice control systems like *
 
 ---
 
+# React Native Performance Optimization
+
+This guide outlines strategies to optimize data fetching and rendering in React Native applications, enhancing app performance and user experience.
+
+## Table of Contents
+- [Efficient Data Fetching](#efficient-data-fetching)
+- [Lazy Loading for Rendering](#lazy-loading-for-rendering)
+- [Avoid Unnecessary Re-rendering](#avoid-unnecessary-re-rendering)
+
+---
+
+## Efficient Data Fetching
+
+Efficient data fetching is crucial to minimize load times and improve app responsiveness. Key approaches include:
+
+1. **Batch API Requests**  
+   Consolidate multiple API calls into a single request to reduce the number of HTTP requests and improve efficiency, we can perform this using `Axios`
+
+2. **Caching**  
+   Implement caching mechanisms for frequently accessed data. Use libraries like `react-query` to minimize unnecessary network requests.
+
+3. **Pagination and Infinite Scrolling**  
+   Fetch data in smaller, manageable chunks instead of loading everything at once. This reduces initial load time and improves performance for data-heavy views.
+
+---
+
+## Lazy Loading for Rendering
+
+Lazy loading defers rendering or loading of components and assets until they are needed. This reduces memory usage and improves load times:
+
+1. **Lazy Load Components**  
+   Use libraries like `react-native-lazy-load` to render components only when they come into view, enhancing performance on complex screens.
+
+2. **Lazy Load Images**  
+   - Load images only when they are about to appear on the screen.
+   - Use optimized formats such as **WEBP** to reduce file size.
+   - Consider libraries like `react-native-fast-image` for efficient image loading and caching.
+
+---
+
+## Avoid Unnecessary Re-rendering
+
+
+
+1. **Use `React.memo` or `PureComponent`**  
+   - Wrap functional components with `React.memo` to prevent them from re-rendering unnecessarily.
+   - For class components, use `PureComponent` to achieve similar effects.
+
+2. **Optimize State Management**  
+   - Avoid deeply nested state objects and minimize updates that trigger re-renders.
+   - Use state management libraries like `Zustand` for fine-grained control over state updates.
+4. **Use `useCallback` and `useMemo` Hooks**  
+   - Use `useCallback` to memoize functions and avoid creating new function instances on every render.
+   - Use `useMemo` to memoize expensive calculations or derived values.
+
+5. **Profile Components with Flipper**  
+   - Use Flipper’s React DevTools to analyze component render times and identify unnecessary re-renders.
+
+---
 ## Bug Identification and Troubleshooting
 
 1. ### Memory Leak Due to Uncontrolled `setInterval`
