@@ -256,8 +256,8 @@ To integrate your native modules with React Native:
 ---
 
 ## Next Steps
-1. Publish your Alexa skill in the Alexa Skills Store.
-2. Publish your Google Action on the Google Assistant platform.
+1. Publish the Alexa skill in the Alexa Skills Store.
+2. Publish the Google Action on the Google Assistant platform.
 
 ---
 
@@ -269,8 +269,6 @@ For more info, refer to:
 ---
 
 # React Native Performance Optimization
-
-This guide outlines strategies to optimize data fetching and rendering in React Native applications, enhancing app performance and user experience.
 
 ## Table of Contents
 - [Efficient Data Fetching](#efficient-data-fetching)
@@ -327,7 +325,7 @@ Lazy loading defers rendering or loading of components and assets until they are
    - Use Flipper’s React DevTools to analyze component render times and identify unnecessary re-renders.
 
 ---
-## Bug Identification and Troubleshooting
+## Bug Identification and Troubleshooting For The Provided Code
 
 1. ### Memory Leak Due to Uncontrolled `setInterval`
 
